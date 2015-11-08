@@ -1,0 +1,39 @@
+{
+  "name": "jquery-asynclink",
+  "version": "1.0.0",
+  "author": "Maksim Krylosov <aequitenrus@gmail.com> (http://aeqdev.com/)",
+  "license": "MIT",
+  "homepage": "http://aeqdev.com/tools/js/asynclink/",
+  "bugs": "https://github.com/makryl/jquery-asynclink/issues",
+  "description": "`AsyncLink` will transform your classic web site into a modern ajax driven single page. It is jQuery plugin that replaces all needed links and forms with ajax handlers.",
+  "keywords": [
+    "jquery-plugin",
+    "ecosystem:jquery",
+    "jquery",
+    "ajax",
+    "single-page",
+    "links",
+    "forms",
+    "history",
+    "navigation"
+  ],
+  "main": "asynclink.jquery.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/makryl/jquery-asynclink.git"
+  },
+  "dependencies": {
+    "jquery": ">=1.9"
+  },
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-bump": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-compress": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-file-info": "*",
+    "grunt-markdown": "*",
+    "grunt-npm": "*",
+    "grunt-replace": "*"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "jquery-asynclink",
+  "description": "`AsyncLink` will transform your classic web site into a modern ajax driven single page. It is jQuery plugin that replaces all needed links and forms with ajax handlers.",
+  "main": "asynclink.jquery.min.js",
+  "authors": [
+    "Maksim Krylosov <aequitenrus@gmail.com> (http://aeqdev.com/)"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "jquery-plugin",
+    "ecosystem:jquery",
+    "jquery",
+    "ajax",
+    "single-page",
+    "links",
+    "forms",
+    "history",
+    "navigation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/makryl/jquery-asynclink.git"
+  },
+  "moduleType": [],
+  "homepage": "http://aeqdev.com/tools/js/asynclink/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "tpl",
+    "Gruntfile.js",
+    "index.html",
+    "package.json"
+  ],
+  "dependencies": {
+    "jquery": ">=1.9"
+  }
+}

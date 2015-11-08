@@ -1,0 +1,312 @@
+<!doctype html>
+<html>
+<head>
+    <title>AsyncLink | js | tools | aeqdev.com</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="http://aeqdev.com/tools/css/default/adefault-light.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .wrapper {
+            max-width: 200mm;
+            margin: 0 auto;
+        }
+
+        /* Highlight.js */
+        /* Google Code style (c) Aahan Krish <geekpanth3r@gmail.com> */
+
+        .hljs {
+            display: block;
+            overflow-x: auto;
+            padding: 0.5em;
+            background: white;
+            color: black;
+        }
+
+        .hljs-comment,
+        .hljs-quote {
+            color: #800;
+        }
+
+        .hljs-keyword,
+        .hljs-selector-tag,
+        .hljs-section,
+        .hljs-title,
+        .hljs-name {
+            color: #008;
+        }
+
+        .hljs-variable,
+        .hljs-template-variable {
+            color: #660;
+        }
+
+        .hljs-string,
+        .hljs-selector-attr,
+        .hljs-regexp {
+            color: #080;
+        }
+
+        .hljs-literal,
+        .hljs-symbol,
+        .hljs-bullet,
+        .hljs-meta,
+        .hljs-meta *,
+        .hljs-number,
+        .hljs-link {
+            color: #066;
+        }
+
+        .hljs-title,
+        .hljs-doctag,
+        .hljs-type,
+        .hljs-attr,
+        .hljs-built_in,
+        .hljs-params {
+            color: #606;
+        }
+
+        .hljs-attribute,
+        .hljs-subst {
+            color: #000;
+        }
+
+        .hljs-formula {
+            background-color: #eee;
+            font-style: italic;
+        }
+
+        .hljs-selector-id,
+        .hljs-selector-class {
+            color: #9B703F
+        }
+
+        .hljs-addition {
+            background-color: #baeeba;
+        }
+
+        .hljs-deletion {
+            background-color: #ffc8bd;
+        }
+
+        .hljs-doctag,
+        .hljs-strong {
+            font-weight: bold;
+        }
+
+        .hljs-emphasis {
+            font-style: italic;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+
+<h1 id="asynclink-jquery-js">AsyncLink.jQuery.js</h1>
+<p><code>AsyncLink</code> will transform your classic web site into a modern AJAX driven single page. It is jQuery plugin that replaces all needed links and forms with AJAX handlers.</p>
+<p>Current version <strong>1.0.0</strong> (2015-11-08).</p>
+<ul>
+<li><a href="asynclink.jquery.js">asynclink.jquery.js</a> (6.9 kB)</li>
+<li><a href="asynclink.jquery.min.js">asynclink.jquery.min.js</a> (2.8 kB, gzipped 1.2 kB)</li>
+<li>Fork at <a href="https://github.com/makryl/jquery-asynclink">Github</a></li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li>AJAX links.</li>
+<li>AJAX forms.</li>
+<li>Changes history state if browser supports it.</li>
+<li>Navigates by history.</li>
+<li>Custom links and targets.</li>
+<li>Forms with file uploads works also.</li>
+</ul>
+<h2>Example</h2>
+
+<p><b>Note.</b> Because of browser's security policy, AJAX requests doesn't work for local files. This example will not work if you open <code>index.html</code> from local file system (<code>file:///</code>). To test this example use network protocol (i. e. <code>http://localhost/...</code>, or <a href="http://aeqdev.com/tools/js/asynclink/">project page</a>). </p>
+
+<p>Don't forget to look at current URL, and play with history back and forward.</p>
+
+<ul>
+    <li><a href="./">Main page</a></li>
+    <li><a href="./test.html">Test page</a></li>
+    <li><a href="./alternative_link.html" al-href="./test/test_alternative_link.html">Test alternative URL</a></li>
+    <li><a href="./test_target.html" al-target=".test-target">Test alternative target</a></li>
+    <li><a href="#test" al-href="./test/test_hash.html">Test page without history change</a></li>
+    <li><a href="./test_form.html">Test form</a></li>
+</ul>
+
+<div class="test-main">
+    Main target here
+</div>
+
+<div class="test-target">
+    Alternative test target here
+</div>
+
+<style>
+    .test-main,
+    .test-target {
+        border: 1px dashed #ccc;
+        margin-bottom: 1.5em;
+        padding: 1.5em;
+    }
+</style>
+
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="asynclink.jquery.js"></script>
+
+<script>
+    $(function() {
+        $('body').asynclink({
+            selectorLinks: 'a[href^="./"],*[al-href^="./"]',
+            selectorForms: 'form[action^="./"],form[al-action^="./"],form:not([action])',
+            target: '.test-main',
+            state: {
+                url: './test/index.html'
+            },
+            replaceUrlCallback: function(url) {
+                return url.replace(/^\.\//, './test/');
+            },
+            ajaxSettings: {
+                success: function(data, textStatus, jqXHR) {
+                    var m = data.match(/<meta name="title" content="([^"]*)">/);
+                    if (m && m[1]) {
+                        document.title = m[1];
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error(textStatus);
+                }
+            }
+        })
+    });
+</script>
+
+<p>&nbsp;</p>
+
+<h2 id="usage">Usage</h2>
+<h3 id="basic">Basic</h3>
+<p>Add jQuery and AsyncLink scripts at your page.</p>
+<pre><code><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"jquery.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"asynclink.jquery.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre><p>Call plugin on root element. Inside this element plugin will search links and forms, and by default replace root element&#39;s contents with AJAX responses.</p>
+<pre><code><span class="hljs-variable">$(</span><span class="hljs-string">'body'</span>).asynclink();
+</code></pre><p>Server should response to AJAX request with content part of page only. To let server know that it is AJAX request you should mark your request somehow. For example, for link to <code>/foo.html</code> you can:</p>
+<ul>
+<li>Add parameter to URL: <code>/foo.html?async=1</code>.</li>
+<li>Add prefix to URL: <code>/async/foo.html</code>.</li>
+<li>Add header to request: <code>Async: true</code>, in this case no need to change link.</li>
+<li>Fully replace URL: <code>/bar.html</code>.</li>
+</ul>
+<h3 id="replacing-url">Replacing URL</h3>
+<p>To replace URL using some simple rule, you can use <code>replaceUrlCallback</code> option:</p>
+<pre><code><span class="hljs-comment">// add parameter to URL</span>
+$(<span class="hljs-string">'body'</span>).asynclink({
+    replaceUrlCallback: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url)</span> </span>{
+        <span class="hljs-keyword">return</span> url + (url.indexOf(<span class="hljs-string">'?'</span>) == -<span class="hljs-number">1</span> ? <span class="hljs-string">'?'</span> : <span class="hljs-string">'&amp;'</span>) + <span class="hljs-string">'async=1'</span>;
+    }
+});
+
+<span class="hljs-comment">// or add prefix to URL</span>
+$(<span class="hljs-string">'body'</span>).asynclink({
+    replaceUrlCallback: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url)</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">'/async'</span> + url; <span class="hljs-comment">// will work if your urls starts with "/"</span>
+    }
+});
+</code></pre><h3 id="adding-custom-header">Adding custom header</h3>
+<p>To add custom header you can use <code>ajaxSettings</code> option. These AJAX settings are the same as in <a href="http://api.jquery.com/jquery.ajax/"><code>jQuery.ajax</code></a> function, and you can change any of these settings.</p>
+<pre><code><span class="hljs-comment">// add custom header</span>
+$(<span class="hljs-string">'body'</span>).asynclink({
+    ajaxSettings: {
+        headers: {
+            <span class="hljs-string">'Async'</span>: <span class="hljs-string">'true'</span>
+        }
+    }
+});
+</code></pre><h3 id="custom-link-attribute">Custom link attribute</h3>
+<p>To fully replace URL, you can use <code>al-href</code> attribute for links or <code>al-action</code> for forms. The flaw of this method is that you should change your html source code.</p>
+<pre><code><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/foo.html"</span> <span class="hljs-attribute">al-href</span>=<span class="hljs-value">"/bar.html"</span>&gt;</span>foo<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+</code></pre><h3 id="targets">Targets</h3>
+<p>If your root element differs from main content block, which should change by AJAX requests, use <code>target</code> option - it is jQuery selector to needed element.</p>
+<pre><code><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/foo.html"</span>&gt;</span>foo<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/bar.html"</span>&gt;</span>bar<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"main"</span>&gt;</span>
+            contents
+        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"jquery.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"asynclink.jquery.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+            <span class="hljs-comment">// find links in "body" element,</span>
+            <span class="hljs-comment">// but load AJAX request to element with css class "main"</span>
+            $(<span class="hljs-string">'body'</span>).asynclink({
+                target: <span class="hljs-string">'.main'</span>
+            });
+        </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre><p>Also, you can specify target in link or form element using <code>al-target</code> attribute:</p>
+<pre><code><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/foo.html"</span> <span class="hljs-attribute">al-target</span>=<span class="hljs-value">".custom"</span>&gt;</span>foo<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+</code></pre><h3 id="history-change-ignoring">History change ignoring</h3>
+<p>History state will not change in next cases:</p>
+<ul>
+<li>Forms with <code>POST</code> method.</li>
+<li><p>If URL starts with <code>#</code>, and you use custom attribute.</p>
+<pre><code>  <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#foo"</span> <span class="hljs-attribute">al-href</span>=<span class="hljs-value">"/foo.html"</span>&gt;</span>foo<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+</code></pre></li>
+</ul>
+<h3 id="file-uploads">File uploads</h3>
+<p>Forms with file uploads will work with <code>enctype=&quot;multipart/form-data&quot;</code>, if browser supports <code>FormData</code>.</p>
+<h3 id="complete-and-error-handlers">Complete and error handlers</h3>
+<p>Use <code>ajaxSettings</code> as in <a href="http://api.jquery.com/jquery.ajax/"><code>jQuery.ajax</code></a>. There are <code>success</code>, <code>error</code> and <code>complete</code> options.</p>
+<pre><code>$(<span class="hljs-string">'body'</span>).asynclink({
+    ajaxSettings: {
+        success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data, textStatus, jqXHR)</span> </span>{
+            <span class="hljs-keyword">var</span> m = data.match(<span class="hljs-regexp">/&lt;meta name="title" content="([^"]*)"&gt;/</span>);
+            <span class="hljs-keyword">if</span> (m &amp;&amp; m[<span class="hljs-number">1</span>]) {
+                <span class="hljs-built_in">document</span>.title = m[<span class="hljs-number">1</span>];
+            }
+        },
+        error: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(jqXHR, textStatus, errorThrown)</span> </span>{
+            <span class="hljs-built_in">console</span>.error(textStatus);
+        }
+    }
+});
+</code></pre><h3 id="options">Options</h3>
+<ul>
+<li><code>id</code> - if you want multiple plugin instances with different options, set different identifiers for properly navigation by history, to let history know which instance options should be used. Default: index number, starting from <code>0</code>.</li>
+<li><code>selectorLinks</code> - selector of links that should work in AJAX mode. Default: <code>a[href^=&quot;/&quot;],*[al-href^=&quot;/&quot;]</code>, it means links with <code>href</code> attribute or any element with <code>al-href</code> attribute starting with <code>/</code>.</li>
+<li><code>selectorForms</code> - selector of forms that should work in AJAX mode. Default: <code>form[action^=&quot;/&quot;],form[al-action^=&quot;/&quot;],form:not([action])</code>, it means forms with <code>action</code> or <code>al-action</code> attribute starting with <code>/</code> or forms without <code>action</code> attribute.</li>
+<li><code>state</code> - initial history state object with two parameters <code>url</code> and <code>target</code>. By default <code>url</code> sets to current location processed by <code>replaceUrlCallback</code>, and <code>target</code> sets to plugin&#39;s <code>target</code> option.</li>
+<li><code>target</code> - selector of target element for AJAX requests. By default equals to root plugin&#39;s selector.</li>
+<li><code>ajaxSettings</code> - additional settings for AJAX requests, same as: <a href="http://api.jquery.com/jquery.ajax/"><code>jQuery.ajax</code></a>.</li>
+<li><code>replaceUrlCallback</code> - function used to transform URL of links or forms for AJAX requests.</li>
+<li><code>attrTarget</code> - custom <code>target</code> attribute. Default: <code>al-target</code>.</li>
+<li><code>attrHref</code> - custom link&#39;s <code>href</code> attribute. Default: <code>al-href</code>.</li>
+<li><code>attrAction</code> - custom form&#39;s <code>action</code> attribute. Default: <code>al-action</code>.</li>
+</ul>
+<h3 id="static-methods">Static methods</h3>
+<ul>
+<li><code>$.asynclink.rebind(id = 0)</code> - using this method you can manually rebind links and forms handlers, if you made any external changes in root plugin&#39;s element.</li>
+<li><code>$.asynclink.unbind(id = 0)</code> - removes all handlers of specified plugin instance.</li>
+<li><code>$.asynclink.rebindAll()</code> - rebinds all handlers of all plugin instances.</li>
+<li><code>$.asynclink.unbindAll()</code> - remove all handlers of all plugin instances.</li>
+</ul>
+<h2 id="mit-license">MIT License</h2>
+<p>Copyright (c) 2015 Maksim Krylosov <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#x3a;&#97;&#101;&#113;&#x75;&#x69;&#x74;&#101;&#114;&#x6e;&#x75;&#x73;&#64;&#103;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#111;&#109;">&#97;&#101;&#113;&#x75;&#x69;&#x74;&#101;&#114;&#x6e;&#x75;&#x73;&#64;&#103;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#111;&#109;</a></p>
+
+
+</div>
+
+</body>
+</html>
